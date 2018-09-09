@@ -31,12 +31,13 @@ public:
             "Component must be inherited from BaseComponent");
 
         auto component = std::make_unique<Component>(std::forward<ComponentArgs>(args)...);
-        auto* ptr = component.get();
+        auto* componentPtr = component.get();
 
-        const bool valid = m_components.insert({ entity.id(), std::move(component) }).second;
+        // FIXME: Check if insertion was valid
+        m_components.insert({ entity.id(), std::move(component) });
 
         entity.registerComponent<Component>();
-        return *ptr;
+        return *componentPtr;
     }
 
     Component& get(const Entity& entity) const
@@ -78,7 +79,7 @@ public:
         auto& manager = m_managers.at(Component::familyId());
 
         return *reinterpret_cast<BaseComponentManager<Component>*>(manager.get());
-    };
+    }
 
     template <typename Component, typename... ComponentArgs>
     Component& add(Entity& entity, ComponentArgs&&... args)

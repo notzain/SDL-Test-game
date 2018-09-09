@@ -19,7 +19,7 @@ private:
     std::bitset<32> m_tagSignature;
 
 public:
-    explicit Entity::Entity(EntityId id);
+    explicit Entity(EntityId id);
 
     EntityId id() const;
 

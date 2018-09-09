@@ -15,7 +15,7 @@ struct PositionComponent : public engine::BaseComponent<PositionComponent> {
     }
 };
 
-int main(int argc, char** argv)
+int main(int /*argc*/, char** /*argv*/)
 {
     engine::EntityManager entityManager;
     engine::ComponentManager componentManager;

@@ -1,3 +1,7 @@
 cmake-build-debug/
+[Bb]uild/
+[Bb]in/
 .idea/
 .vs/
+.ccls-cache/
+compile_commands.json
