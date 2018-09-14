@@ -3,22 +3,24 @@
 
 #include <cassert>
 #include <memory>
-#include <vector>
+#include <unordered_map>
 
 #include "Entity.h"
 
 namespace engine {
 
 class EntityManager {
-private:
-    std::vector<std::unique_ptr<Entity>> m_entities;
+    std::unordered_map<EntityId, std::unique_ptr<Entity>> m_entities;
+    //std::vector<std::unique_ptr<Entity>> m_entities;
     EntityId lastEntityId = 0;
 
 public:
     EntityManager() = default;
 
     Entity& create();
-    void destroy(Entity& entity);
+    Entity& entity(EntityId entityId);
+    void destroy(const Entity& entity);
+    void destroy(EntityId entityId);
 
 private:
     EntityId makeUniqueEntityId();

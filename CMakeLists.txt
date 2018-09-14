@@ -20,10 +20,11 @@ include_directories(engine)
 add_subdirectory(engine)
 add_subdirectory(game)
 
-target_include_directories(engine PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-        $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
-        )
+target_include_directories(
+    engine PUBLIC
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+    $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 include_directories(${CMAKE_SOURCE_DIR}/external)
 add_subdirectory(tests)

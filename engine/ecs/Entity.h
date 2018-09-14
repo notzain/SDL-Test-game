@@ -13,7 +13,6 @@ namespace engine {
 using EntityId = uint64_t;
 
 class Entity {
-private:
     const EntityId m_id;
     std::bitset<32> m_componentSignature;
     std::bitset<32> m_tagSignature;

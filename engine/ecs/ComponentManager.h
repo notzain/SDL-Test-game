@@ -18,9 +18,9 @@ public:
     virtual ~IComponentManager();
 };
 
+using ComponentMap = std::unordered_map<EntityId, std::unique_ptr<IComponent>>;
 template <typename Component>
 class BaseComponentManager : public IComponentManager {
-    using ComponentMap = std::unordered_map<EntityId, std::unique_ptr<Component>>;
     ComponentMap m_components;
 
 public:
@@ -33,20 +33,21 @@ public:
         auto component = std::make_unique<Component>(std::forward<ComponentArgs>(args)...);
         auto* componentPtr = component.get();
 
-        // FIXME: Check if insertion was valid
+        // FIXME: Check if insertion was validC
         m_components.insert({ entity.id(), std::move(component) });
 
         entity.registerComponent<Component>();
         return *componentPtr;
     }
 
-    Component& get(const Entity& entity) const
-    {
-        return *m_components.at(entity.id()).get();
-    }
     Component& get(const EntityId entityId) const
     {
-        return *m_components.at(entityId).get();
+        return *reinterpret_cast<Component*>(m_components.at(entityId).get());
+    }
+
+    Component& get(const Entity& entity) const
+    {
+        return get(entity.id());
     }
 
     ComponentMap& getAll()
@@ -55,8 +56,8 @@ public:
     }
 };
 
+using ManagerMap = std::unordered_map<engine::ComponentId, std::unique_ptr<IComponentManager>>;
 class ComponentManager : public IComponentManager {
-    using ManagerMap = std::unordered_map<engine::ComponentId, std::unique_ptr<IComponentManager>>;
     ManagerMap m_managers;
 
 public:
@@ -76,9 +77,8 @@ public:
         static_assert(std::is_base_of<IComponent, Component>::value,
             "Component must be inherited from BaseComponent");
 
-        auto& manager = m_managers.at(Component::familyId());
-
-        return *reinterpret_cast<BaseComponentManager<Component>*>(manager.get());
+        //auto& managerUptr = m_managers.at(Component::familyId());
+        return *reinterpret_cast<BaseComponentManager<Component>*>(m_managers.at(Component::familyId()).get());
     }
 
     template <typename Component, typename... ComponentArgs>

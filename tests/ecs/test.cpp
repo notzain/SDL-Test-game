@@ -97,6 +97,13 @@ TEST_CASE("The ComponentManager can create managers for each component, and add 
         REQUIRE(entity.hasComponent<TestComponent>());
     }
 
+    SECTION("The ComponentManager can add new components to entities.")
+    {
+        componentManager.addManager<TestComponent>();
+        componentManager.add<TestComponent>(entity, 0, "");
+        REQUIRE(entity.hasComponent<TestComponent>());
+    }
+
     SECTION("The ComponentManager properly forwards component constructor to the added component")
     {
         const int firstValueToTest = 42;
