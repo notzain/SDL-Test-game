@@ -45,7 +45,7 @@ public:
 
 private:
     template <typename... Components>
-    bool entityHasComponents(const Entity& entity) const
+    inline bool entityHasComponents(const Entity& entity) const
     {
         return entity.hasComponent<Components...>();
     }

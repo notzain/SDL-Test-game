@@ -20,7 +20,8 @@ void EntityManager::destroy(const Entity& entity)
     m_entities.erase(entity.id());
 }
 
-void EntityManager::destroy(const EntityId entityId) {
+void EntityManager::destroy(const EntityId entityId)
+{
     m_entities.erase(entityId);
 }
 
@@ -33,7 +34,7 @@ Entity& EntityManager::entity(const EntityId entityId)
     return *entity->get();
     */
     auto& entity = m_entities.at(entityId);
-    return *entity.get();
+    return *entity;
 }
 
 EntityId EntityManager::makeUniqueEntityId()
