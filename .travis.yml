@@ -21,11 +21,11 @@ install:
   - pip install --user -U pip
   - pip install --user cmake
 
-before-script:
+before_script:
   - export CC=gcc-8
   - export CXX=g++-8
 
--script:
+script:
   - mkdir build
   - cd build
   - cmake ..
