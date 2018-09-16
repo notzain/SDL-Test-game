@@ -31,7 +31,7 @@ script:
   - cd build
   - cmake ..
   - make 
-  - ./tests/test
+  - ./tests/tests
   - ../external/Clang-Format/run-clang-format.py -r --exclude '*/.ccls-cache/*' ../engine ../game
   - make tidy > output.txt
   - |
