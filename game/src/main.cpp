@@ -52,5 +52,9 @@ int main(int /*argc*/, char** /*argv*/)
     auto& entity = entityManager.create();
     componentManager.add<PositionComponent>(entity, 0, 0);
     componentManager.add<OtherComponent>(entity, 0, 0);
-    std::cout << entity.hasComponent<PositionComponent, OtherComponent>();
+
+        std::cout << entity.hasComponent<PositionComponent, OtherComponent>();
+
+    OtherComponent *component = new OtherComponent(3, 3);
+
 }
