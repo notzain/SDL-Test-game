@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(SDL_Game)
 
+#
+# Compiler Flags
+#
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -16,6 +20,11 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 endif()
 
+
+#
+# Project Setup
+#
+
 include_directories(engine)
 add_subdirectory(engine)
 add_subdirectory(game)
@@ -26,6 +35,40 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
+#
+# Tests
+#
+
+
 include_directories(${CMAKE_SOURCE_DIR}/external)
 add_subdirectory(tests)
 
+enable_testing()
+add_test(
+    NAME GameTest COMMAND tests
+    )
+
+#
+# Clang Tidy
+#
+find_program(CLANG_TIDY_BIN clang-tidy)
+find_program(RUN_CLANG_TIDY_BIN run-clang-tidy)
+
+if(CLANG_TIDY_BIN STREQUAL "CLANG_TIDY_BIN-NOTFOUND")
+    message(FATAL_ERROR "unable to locate clang-tidy-4.0")
+endif()
+
+if(RUN_CLANG_TIDY_BIN STREQUAL "RUN_CLANG_TIDY_BIN-NOTFOUND")
+    message(FATAL_ERROR "unable to locate run-clang-tidy-4.0.py")
+endif()
+
+list(APPEND RUN_CLANG_TIDY_BIN_ARGS
+    -clang-tidy-binary ${CLANG_TIDY_BIN}
+    -checks=clan*,cert*,misc*,perf*,cppc*,read*,mode*,-cert-err58-cpp,-misc-noexcept-move-constructor
+)
+
+add_custom_target(
+    tidy
+    COMMAND ${RUN_CLANG_TIDY_BIN} ${RUN_CLANG_TIDY_BIN_ARGS}
+    COMMENT "running clang tidy"
+)
