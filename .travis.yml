@@ -31,6 +31,4 @@ script:
   - cd build
   - cmake ..
   - make && make test
-  - ../external/Clang-Format/run-clang-format.py -r \
-    --exclude '*/.ccls-cache/*' \
-    ../engine ../game
+  - ../external/Clang-Format/run-clang-format.py -r --exclude '*/.ccls-cache/*' ../engine ../game
