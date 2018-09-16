@@ -1,9 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 project(SDL_Game)
 
-#
-# Compiler Flags
-#
+## Compiler Flags
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
@@ -20,10 +18,7 @@ else()
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -pedantic")
 endif()
 
-
-#
-# Project Setup
-#
+## Project Setup
 
 include_directories(engine)
 add_subdirectory(engine)
@@ -35,10 +30,7 @@ target_include_directories(
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
 
-#
-# Tests
-#
-
+## Tests
 
 include_directories(${CMAKE_SOURCE_DIR}/external)
 add_subdirectory(tests)
@@ -48,9 +40,8 @@ add_test(
     NAME GameTest COMMAND tests
     )
 
-#
-# Clang Tidy
-#
+## Clang Tidy
+
 find_program(CLANG_TIDY_BIN clang-tidy-6.0)
 find_program(RUN_CLANG_TIDY_BIN run-clang-tidy-6.0)
 
