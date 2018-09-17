@@ -10,7 +10,8 @@ SDLWindow::SDLWindow(std::string windowName, int width, int height)
               SDL_WINDOWPOS_UNDEFINED,
               SDL_WINDOWPOS_UNDEFINED,
               width, height,
-              SDL_WINDOW_OPENGL))
+              SDL_WINDOW_OPENGL),
+          SDL_DestroyWindow)
 {
 }
 

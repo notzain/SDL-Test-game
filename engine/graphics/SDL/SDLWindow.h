@@ -9,7 +9,7 @@
 namespace engine {
 
 class SDLWindow : public IWindow {
-    std::unique_ptr <SDL_Window, std::function<void(SDL_Window*)>> m_window;
+    std::unique_ptr<SDL_Window, std::function<void(SDL_Window*)>> m_window;
 
 public:
     SDLWindow(std::string windowName, int width, int height);

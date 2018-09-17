@@ -29,21 +29,13 @@ before_script:
 script:
   - mkdir build
   - cd build
-  - echo -e "travis_fold:start:$1\033[33;1m$2\033[0m" make "Building"
-  - cmake ..
+  - cmake .. -DENABLE_CLANG_TIDY=ON
   - make  
-  - echo -e "\ntravis_fold:end:$1\r" make
-  - echo -e "travis_fold:start:$1\033[33;1m$2\033[0m" test "Unit Tests"
   - ./tests/tests
-  - echo -e "\ntravis_fold:end:$1\r" test
-  - echo -e "travis_fold:start:$1\033[33;1m$2\033[0m" format "Linter"
   - ../external/Clang-Format/run-clang-format.py -r --exclude '*/.ccls-cache/*' ../engine ../game
-  - echo -e "\ntravis_fold:end:$1\r" format
-  - echo -e "travis_fold:start:$1\033[33;1m$2\033[0m" analyzer "Static analyzer"
   - make tidy &> output.txt
   - |
     if [[ -n $(awk  '/^[^[:blank:]]/{p=0} /warning:/||/error:/||/note:/{p=1} p' output.txt) ]]; then
         awk  '/^[^[:blank:]]/{p=0} /warning:/||/error:/||/note:/{p=1} p' output.txt | grep --color=always -z -E 'warning|error|note|\^'  
         exit -1;
     fi
-  - echo -e "\ntravis_fold:end:$1\r" analyzer
