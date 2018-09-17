@@ -5,14 +5,20 @@ cache: c:\tools\vcpkg\installed\
 build_script:
 - cmd: >-
     cd c:\tools\vcpkg
+
     vcpkg install sdl2
+
     vcpkg integrate install
     
     cd c:\projects\source
+
     mkdir build
+
     cd build
     
     cmake .. "-DCMAKE_TOOLCHAIN_FILE=c:/tools/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
     cmake --build .
+
     ./tests/Debug/tests.exe
 
