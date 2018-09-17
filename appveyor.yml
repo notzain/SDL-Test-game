@@ -3,14 +3,14 @@ image:
 clone_folder: c:\projects\source
 cache: c:\tools\vcpkg\installed\
 build_script:
-- cmd: >-
-    cd c:\tools\vcpkg
+- ps: >-
+    cd 'c:\tools\vcpkg'
 
-    vcpkg install sdl2
+    .\vcpkg.exe install sdl2
 
-    vcpkg integrate install
+    .\vcpkg.exe integrate install
     
-    cd c:\projects\source
+    cd 'c:\projects\source'
 
     mkdir build
 
@@ -20,5 +20,5 @@ build_script:
 
     cmake --build .
 
-    ./tests/Debug/tests.exe
+    .\tests\Debug\tests.exe
 
